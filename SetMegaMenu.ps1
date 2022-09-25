@@ -1,3 +1,8 @@
+<#
+	Jake Cross
+    9-24-22
+    Set horizontal nav and mega menu everywhere
+#>
 Import-Module PnP.PowerShell
 Connect-PnPOnline -UseWebLogin -Url "https://domain.sharepoint.com"
 # Get all sites in tenant
