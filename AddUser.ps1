@@ -212,5 +212,5 @@ ForEach ($UserAccount in $UserAccounts) {
         New-MgInvitation -InvitedUserDisplayName $dn -InvitedUserEmailAddress $UserAccount.FieldValues.PersonalEmail -InviteRedirectUrl "https://myapplications.microsoft.com" -SendInvitationMessage:$true
     }
     # Update Account Created column on sharepoint list so this account is skipped in the future
-    set-pnplistitem -Identity $termaccount.id -Values @{'IsCreated'=$true} -List $listname
+    set-pnplistitem -Identity $useraccount.id -Values @{'IsCreated'=$true} -List $listname
 }
