@@ -31,6 +31,7 @@ $cert = Get-ChildItem Cert:\LocalMachine\My\$Thumbprint
 $Tenant = '_____ORGNAME____.onmicrosoft.com'
 $tenantid = "INSERT TENANT ID FROM AZURE TENANT PROPERTIES"
 $defaultPW = "DEFAULT PW"
+$oupath = "DN OF DEFAULT OU FOR USERS"
 #############
 # Functions #
 #############
