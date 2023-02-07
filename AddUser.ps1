@@ -3,6 +3,7 @@
     Create New User accounts from sharepoint list
 .NOTES
     Authors:    Jake Cross
+    Email:      jake@cross.house
     Updated:    2-5-23
 #>
 #############
