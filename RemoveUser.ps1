@@ -3,6 +3,7 @@
     Termination
 .NOTES
     Authors:    Jake Cross
+    Email:      jake@cross.house
     Updated:    2-5-23
 #>
 #############
@@ -29,6 +30,8 @@ $cert = Get-ChildItem Cert:\LocalMachine\My\$Thumbprint
 # 365 tenant
 $Tenant = '_____ORGNAME____.onmicrosoft.com'
 $tenantid = "INSERT TENANT ID FROM AZURE TENANT PROPERTIES"
+# Time offset from UTC
+$timeoffset = -8
 #########################
 # Connect to Office 365 #
 #########################
@@ -50,7 +53,8 @@ $termaccounts = Get-PnPListItem -connection $formsiteconnection -List $listname 
 $date = get-date
 foreach ($termaccount in $termaccounts) {
     $termdate = $termaccount.FieldValues.TermDateTime
-    $termdate = $termdate.addhours(-8)
+    # Time Offset
+    $termdate = $termdate.addhours($timeoffset)
     if ($termdate -lt $date) {
         $User = $null; $UPN = $null; $aduser = $null; $drs = $null; $newmanager = $null; $newmanageremail = $null; $aznewmanager = $null;
         # Grabs UPN from form
