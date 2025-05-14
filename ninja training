@@ -1,0 +1,78 @@
+# Ninja API Documentation for authorization
+# https://app.ninjarmm.com/apidocs/?links.active=authorization
+# Ninja API Documentation for doing stuff
+# https://app.ninjarmm.com/apidocs/?links.active=core
+
+# application id - like a username for an app
+$ninjaclientid = "XXXXXXXXXXXXXXXXXXXXXXXXX"
+# reusable part of a url
+$ninjabaseurl = "https://app.ninjarmm.com"
+# endpoint that we're hitting - think of it like it's own app, you provide input and it provides output
+$ninjatokenendpoint = "/ws/oauth/token"
+# app client secret - like a password for an app
+$ninjasecret = "XXXXXXXXXXXXXXXXXXXXXXXXX"
+
+# what we're feeding into the app
+$body = @{
+    "grant_type"    = "client_credentials";
+    "client_id"     = "$ninjaclientid";
+    "client_secret" = "$ninjasecret";
+    "scope" = "monitoring";
+}
+
+# calling the body variable to see what powershell thinks it looks like
+$body
+
+# put the baseurl and the endpoint together
+$ninjatokenurl = $ninjabaseurl + $ninjatokenendpoint
+
+# grab the token that we'll use to authenticate requests to the rest of the API
+$token = Invoke-restmethod -Uri $ninjatokenurl -Body $body -Method Post
+
+# Look at all the attributes that the token returned to us has
+$token
+
+# Selecting just the access token and storing that into it's own variable
+$accessToken = $token.access_token
+
+# how we're going to authenticate requests to the rest of the API endpoints, think of this like the to, from, cc, bcc section of an email but it also includes authentication
+$headers = @{
+    "content-type"  = "application/x-www-form-urlencoded";
+    "Authorization" = "Bearer $accessToken";
+}
+
+# endpoint for grabbing all devices in ninja and their detailed attribute info
+$ninjaendpoint = "/v2/devices-detailed"
+
+# put the base url and endpoint together
+$ninjaurl = $ninjabaseurl + $ninjaendpoint
+
+# grab all the devices from the api using the headers with our token
+$devices = Invoke-RestMethod -Uri $ninjaurl -Headers $Headers -Method get
+
+# show all the devices
+$devices
+
+# shows how many devices are in the array
+$devices.count
+
+# get the 4th device in the array
+$devices[4]
+
+# Get the 4th device and store it as a variable
+$device = $devices[4]
+
+# show all the attributes of a device in the array (sometimes powershell hides attributes of an object, try running | select * on stuff and see what's available)
+$device | select *
+
+# Show the object of OS information inside of the device object
+$device.OS
+
+# Show all devices that are offline
+# true and false are special in that they're dedicated variables in powershell and can't be set
+# If you're querying a string you would do -eq "somestring"
+# you can use a bunch of operators, -eq for equals -ne for not equals, check the book or google for more
+$offlinedevices = $devices | where {$_.offline -eq $true}
+
+# check the count to see if there's less devices
+$offlinedevices.count
