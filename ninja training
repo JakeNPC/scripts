@@ -56,7 +56,7 @@ $devices
 # shows how many devices are in the array
 $devices.count
 
-# get the 4th device in the array
+# get the 5th device in the array
 $devices[4]
 
 # Get the 5th device and store it as a variable
