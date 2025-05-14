@@ -59,7 +59,7 @@ $devices.count
 # get the 4th device in the array
 $devices[4]
 
-# Get the 4th device and store it as a variable
+# Get the 5th device and store it as a variable
 $device = $devices[4]
 
 # show all the attributes of a device in the array (sometimes powershell hides attributes of an object, try running | select * on stuff and see what's available)
